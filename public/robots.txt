@@ -1,0 +1,4 @@
+# Permite que todos os robôs de busca (como o Google)
+# indexem o site inteiro.
+User-agent: *
+Allow: /

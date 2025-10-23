@@ -1,0 +1,19 @@
+{
+  "name": "meu-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.10.3",
+    "gsap": "^3.12.5",
+    "swiper": "^11.1.4",
+    "tailwindcss": "^3.4.4"
+  }
+}

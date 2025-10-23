@@ -1,0 +1,41 @@
+---
+// SEÇÃO 1: O "Gancho"
+---
+<section
+  id="hero-section"
+  class="relative h-screen w-full flex items-center justify-center text-center p-4 overflow-hidden"
+>
+  <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold z-10">
+    <span class="hero-line block">Eu não crio sites.</span>
+    <span class="hero-line block mt-4"
+      >Eu construo <span
+        id="hero-solution"
+        class="text-electricBlue relative inline-block"
+      >
+        soluções
+      </span>
+    </span>
+  </h1>
+
+  <svg class="absolute w-0 h-0">
+    <defs>
+      <filter id="liquid-distortion">
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.01 0.01"
+          numOctaves="1"
+          result="turbulence"
+          seed="1"
+          data-base-frequency="0.01 0.01"
+        />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="turbulence"
+          scale="20"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+    </defs>
+  </svg>
+</section>

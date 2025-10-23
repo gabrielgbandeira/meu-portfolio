@@ -1,0 +1,53 @@
+---
+// ESTE É O "MOLDE" PRINCIPAL DO SITE
+import CustomCursor from "@/components/CustomCursor.astro";
+import Preloader from "@/components/Preloader.astro"; // <-- ATUALIZAÇÃO: Importa o Preloader
+import "@/styles/global.css";
+
+// Props (usadas pelas meta tags de SEO)
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Portfólio | Engenheiro de Soluções Full-Stack",
+  description = "Portfólio de Desenvolvedor Full-Stack Pleno, especialista em traduzir problemas de negócio em soluções de código eficientes. Foco em Node.js, SQL e automação.",
+} = Astro.props;
+---
+
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://primiciasschool.online/" />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image:alt" content="Engenheiro de Soluções Full-Stack" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+  </head>
+
+  <body class="bg-black text-white font-sans antialiased overflow-x-hidden">
+    
+    <Preloader /> <CustomCursor />
+
+    <main>
+      <slot />
+    </main>
+
+    <script>
+      import "/src/scripts/main.js";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+---
+// O rodapé simples do site.
+const anoAtual = new Date().getFullYear();
+---
+
+<footer class="text-center p-8 border-t border-gray-800 text-gray-500">
+  <p>
+    &copy; {anoAtual} | Gabriel Bandeira <a
+      href="https://astro.build/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="underline hover:text-electricBlue transition-colors">.DEV</a
+    >
+    e ☕
+  </p>
+  <div class="mt-4 flex justify-center space-x-6">
+    <a
+      href="www.linkedin.com/in/gabriel-bandeira-devb1285264"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-white transition-colors">LinkedIn</a
+    >
+    <a
+      href="https://www.instagram.com/gbandeira_/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-white transition-colors">Instagram</a
+    >
+    <a
+      href="https://wa.me/5563991034984?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hover:text-white transition-colors">WhatsApp</a
+    >
+  </div>
+</footer>
