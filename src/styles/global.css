@@ -109,17 +109,8 @@
   }
 }
 
-/* 3. Estilos do Swiper (Mobile) */
-@media (max-width: 767px) {
-  #projects-section {
-    height: auto; /* Remove altura fixa no mobile */
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-  .swiper-pagination-bullet-active {
-    background-color: theme('colors.electricBlue') !important;
-  }
-}
+/* 3. Estilos do Swiper (Mobile - parte do @media abaixo) */
+
 
 /* --- ATUALIZAÇÃO: ESTILOS ADICIONAIS v1.0 --- */
 
@@ -136,7 +127,6 @@
   height: 100%;
   object-fit: cover;
   z-index: 1;
-  /* ATUALIZAÇÃO: Efeito de zoom no hover REMOVIDO */
   transition: transform 0.6s ease-out;
 }
 
@@ -145,7 +135,6 @@
   inset: 0;
   background-color: rgba(0, 0, 0, 0.7); /* Overlay escuro */
   z-index: 2;
-  /* ATUALIZAÇÃO: Efeito de cor no hover REMOVIDO */
   transition: background-color 0.3s ease;
 }
 
@@ -154,7 +143,7 @@
   z-index: 3;
 }
 
-/* ATUALIZAÇÃO: Novo estilo para o TÍTULO do projeto clicável */
+/* Novo estilo para o TÍTULO do projeto clicável */
 .project-title-link {
   display: inline-block;
   transition: color 0.3s ease;
@@ -164,14 +153,31 @@
   text-decoration: underline;
 }
 
-/* ATUALIZAÇÃO: Removemos os efeitos de hover globais do card */
+/* --- CORREÇÃO FINAL: Regras Responsivas --- */
+
+/* Estilos para telas MAIORES que 768px (Desktop) */
 @media (min-width: 768px) {
-  /*
-  .project-card:hover .card-bg-image {
-    transform: scale(1.05);
+  /* Aqui poderíamos adicionar estilos específicos para desktop se necessário */
+  /* Exemplo: .project-card:hover .card-bg-image { transform: scale(1.05); } */
+}
+
+/* Estilos para telas MENORES que 767px (Mobile) */
+@media (max-width: 767px) {
+  /* Ajustes do Swiper */
+  #projects-section {
+    height: auto;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
-  .project-card:hover .card-bg-overlay {
-    background-color: rgba(0, 34, 133, 0.5); 
+  .swiper-pagination-bullet-active {
+    background-color: theme('colors.electricBlue') !important;
   }
-  */
+
+  /* Esconde o cursor customizado */
+  .custom-cursor {
+    display: none !important; /* Usando !important para garantir */
+  }
+  body {
+     cursor: default !important; /* Usando !important para garantir */
+  }
 }
