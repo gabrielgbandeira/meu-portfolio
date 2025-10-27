@@ -1,7 +1,7 @@
 ---
 // ESTE É O "MOLDE" PRINCIPAL DO SITE
 import CustomCursor from "@/components/CustomCursor.astro";
-import Preloader from "@/components/Preloader.astro"; // <-- ATUALIZAÇÃO: Importa o Preloader
+import Preloader from "@/components/Preloader.astro";
 import "@/styles/global.css";
 
 // Props (usadas pelas meta tags de SEO)
@@ -39,8 +39,9 @@ const {
   </head>
 
   <body class="bg-black text-white font-sans antialiased overflow-x-hidden">
-    
-    <Preloader /> <CustomCursor />
+
+    <Preloader />
+    <CustomCursor />
 
     <main>
       <slot />

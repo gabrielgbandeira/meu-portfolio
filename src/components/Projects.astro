@@ -1,17 +1,16 @@
 ---
-// SEÇÃO 3: Projetos Destaque (com caminhos relativos)
+// SEÇÃO 3: Projetos Destaque (com Swiper e Navegação)
 ---
 
 <section
   id="projects-section"
-  class="h-auto md:h-screen swiper-container my-32 md:my-0"
+  class="swiper-container my-32 md:my-0"
 >
   <div
-    id="horizontal-scroll-container"
-    class="flex h-full w-auto md:w-[500vw] swiper-wrapper"
+    id="horizontal-scroll-container" class="swiper-wrapper"
   >
     <div
-      class="project-card relative w-screen h-full flex flex-col justify-center p-8 md:p-16 swiper-slide"
+      class="project-card relative w-screen swiper-slide"
     >
       <div class="card-content z-10">
         <h3 class="text-6xl text-electricBlue">01</h3>
@@ -26,13 +25,14 @@
       </div>
       <div class="card-bg-overlay"></div>
       <img
-        src="projetos/projeto-1.jpg" alt="Preview de um dashboard com gráficos"
+        src="projetos/projeto-1.jpg"
+        alt="Preview de um dashboard com gráficos"
         class="card-bg-image"
       />
     </div>
 
     <div
-      class="project-card relative w-screen h-full flex flex-col justify-center p-8 md:p-16 swiper-slide"
+      class="project-card relative w-screen swiper-slide"
     >
       <div class="card-content z-10">
         <h3 class="text-6xl text-electricBlue">02</h3>
@@ -47,13 +47,14 @@
       </div>
       <div class="card-bg-overlay"></div>
       <img
-        src="projetos/projeto-2.jpg" alt="Preview de um software CRM"
+        src="projetos/projeto-2.jpg"
+        alt="Preview de um software CRM"
         class="card-bg-image"
       />
     </div>
 
     <div
-      class="project-card relative w-screen h-full flex flex-col justify-center p-8 md:p-16 swiper-slide"
+      class="project-card relative w-screen swiper-slide"
     >
       <div class="card-content z-10">
         <h3 class="text-6xl text-electricBlue">03</h3>
@@ -68,13 +69,14 @@
       </div>
       <div class="card-bg-overlay"></div>
       <img
-        src="projetos/projeto-3.jpg" alt="Preview de código de API em um notebook"
+        src="projetos/projeto-3.jpg"
+        alt="Preview de código de API em um notebook"
         class="card-bg-image"
       />
     </div>
 
     <div
-      class="project-card relative w-screen h-full flex flex-col justify-center p-8 md:p-16 swiper-slide"
+      class="project-card relative w-screen swiper-slide"
     >
       <div class="card-content z-10">
         <h3 class="text-6xl text-electricBlue">04</h3>
@@ -89,13 +91,14 @@
       </div>
       <div class="card-bg-overlay"></div>
       <img
-        src="projetos/projeto-4.jpg" alt="Preview de um site de e-commerce"
+        src="projetos/projeto-4.jpg"
+        alt="Preview de um site de e-commerce"
         class="card-bg-image"
       />
     </div>
 
     <div
-      class="project-card relative w-screen h-full flex flex-col justify-center p-8 md:p-16 swiper-slide"
+      class="project-card relative w-screen swiper-slide"
     >
       <div class="card-content z-10">
         <h3 class="text-6xl text-electricBlue">05</h3>
@@ -105,16 +108,20 @@
         <p class="text-xl mt-4 max-w-lg">
           Interface web para validação de imagens de monitoramento enviadas via
           FTP, otimizando o processo de verificação manual.
-        </se>
+        </p>
         <span class="mt-4 text-gray-200 font-bold">HTML | CSS | PHP | JavaScript</span>
       </div>
       <div class="card-bg-overlay"></div>
       <img
-        src="projetos/projeto-5.jpg" alt="Preview de um web app"
+        src="projetos/projeto-5.jpg"
+        alt="Preview de um web app"
         class="card-bg-image"
       />
     </div>
   </div>
 
-  <div class="swiper-pagination md:hidden"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <div class="swiper-pagination"></div>
 </section>

@@ -1,10 +1,12 @@
-// Importamos TUDO (Swiper, GSAP, ScrollTrigger)
+// Importamos TUDO (Swiper, GSAP)
 import Swiper from 'swiper/bundle';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from 'gsap/ScrollTrigger'; // Necessário para animação 'About'
 
-// Registra o plugin (agora importado)
-gsap.registerPlugin(ScrollTrigger);
+// Registra o plugin ScrollTrigger SE for usado
+if (document.querySelector('.stagger-lines')) {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 // --- 0. Animação do PRELOADER ---
 const preloader = document.querySelector('#preloader');
@@ -12,53 +14,74 @@ if (preloader) {
   const preloaderName = document.querySelector('#preloader-name');
   const preloaderDev = document.querySelector('#preloader-dev');
 
-  const preloaderTL = gsap.timeline();
-  preloaderTL
-    .to(preloaderName, { duration: 0.8, opacity: 1, delay: 0.5 })
-    .to(preloaderDev, { duration: 0.5, opacity: 1 })
-    // --- ATUALIZAÇÃO: Aumentamos o delay de 0.5 para 3.2 ---
-    .to([preloaderName, preloaderDev], {
-      duration: 0.5,
-      opacity: 0,
-      delay: 3.2, // O nome fica visível por mais tempo
-    })
-    .to(preloader, {
-      duration: 0.8,
-      y: '-100%',
-      ease: 'power3.out',
-    })
-    .from(
-      '.hero-line',
-      {
+  if (preloaderName && preloaderDev) {
+    const preloaderTL = gsap.timeline({
+        onComplete: startHeroAnimation // Chama a animação do Hero DEPOIS
+    });
+    preloaderTL
+      .to(preloaderName, { duration: 0.8, opacity: 1, delay: 0.5 })
+      .to(preloaderDev, { duration: 0.5, opacity: 1 })
+      .to([preloaderName, preloaderDev], {
+        duration: 0.5,
+        opacity: 0,
+        delay: 3.2,
+      })
+      .to(preloader, {
+        duration: 0.8,
+        y: '-100%',
+        ease: 'power3.out',
+      });
+  } else {
+      if(preloader) preloader.style.display = 'none';
+      startHeroAnimation();
+  }
+} else {
+    startHeroAnimation();
+}
+
+// --- Função Separada para Animação da Seção HERO ---
+function startHeroAnimation() {
+  if (document.querySelector('.hero-line')) {
+    gsap
+      .timeline()
+      .from('.hero-line', {
         duration: 1,
         y: 100,
         stagger: 0.2,
         ease: 'power3.out',
-      },
-      '-=0.5',
-    );
+      });
+  }
 }
+
 
 // --- 1. Animação do Cursor Customizado ---
 const cursor = document.querySelector('.custom-cursor');
 const links = document.querySelectorAll(
   'a, button, input, textarea, [data-cursor-hover]',
 );
+if (cursor) {
+  // Esconder cursor imediatamente se for mobile
+  if (window.innerWidth <= 767) {
+    cursor.style.display = 'none';
+    document.body.style.cursor = 'default';
+  } else {
+    // Adiciona listeners apenas se NÃO for mobile
+    window.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, {
+        duration: 0.1,
+        x: e.clientX,
+        y: e.clientY,
+      });
+    });
+    links.forEach((link) => {
+      link.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      link.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+  }
+}
 
-window.addEventListener('mousemove', (e) => {
-  gsap.to(cursor, {
-    duration: 0.1,
-    x: e.clientX,
-    y: e.clientY,
-  });
-});
 
-links.forEach((link) => {
-  link.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  link.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-
-// --- 2. Animação da Seção HERO (Efeito UAU) ---
+// --- 2. Lógica do Efeito "UAU" (HOVER) no Hero ---
 const heroSolution = document.querySelector('#hero-solution');
 const turbulence = document.querySelector('#liquid-distortion feTurbulence');
 
@@ -86,58 +109,65 @@ if (heroSolution && turbulence) {
 
 // --- 3. Animação da Seção SOBRE MIM (Stagger) ---
 if (document.querySelector('.stagger-lines')) {
-  gsap.from('.stagger-lines span', {
-    scrollTrigger: {
-      trigger: '.stagger-lines',
-      start: 'top 80%',
-    },
-    duration: 0.8,
-    y: 50,
-    stagger: 0.3,
-    ease: 'power2.out',
-  });
+    gsap.from('.stagger-lines span', {
+        scrollTrigger: {
+            trigger: '.stagger-lines',
+            start: 'top 80%',
+        },
+        duration: 0.8,
+        y: 50,
+        stagger: 0.3,
+        ease: 'power2.out',
+     });
 }
 
-// --- 4. Animação RESPONSIVA (PROJETOS) ---
-ScrollTrigger.matchMedia({
-  '(min-width: 768px)': () => {
-    const horizontalSection = document.querySelector('#projects-section');
-    const horizontalContainer = document.querySelector(
-      '#horizontal-scroll-container',
-    );
-    if (!horizontalSection || !horizontalContainer) return;
-    gsap.to(horizontalContainer, {
-      x: () =>
-        -(
-          horizontalContainer.scrollWidth - document.documentElement.clientWidth
-        ),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: horizontalSection,
-        start: 'top top',
-        end: () =>
-          '+=' +
-          (horizontalContainer.scrollWidth - document.documentElement.clientWidth),
-        scrub: 1,
-        pin: true,
-        invalidateOnRefresh: true,
-      },
-    });
-  },
-  '(max-width: 767px)': () => {
+// --- 4. Inicialização do Swiper (SEMPRE) ---
+console.log("Attempting to initialize Swiper...");
+try {
+  const swiperContainer = document.querySelector('.swiper-container');
+  if (swiperContainer) {
     new Swiper('.swiper-container', {
       loop: false,
       slidesPerView: 1,
-      spaceBetween: 20,
+      spaceBetween: 30,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
       },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+       grabCursor: true, // Habilita cursor "grab"
     });
-  },
+    console.log("Swiper initialized successfully.");
+  } else {
+      console.error("Swiper init skipped: Missing .swiper-container element.");
+  }
+} catch (error) {
+  console.error("Error initializing Swiper:", error);
+}
+
+// --- 5. Listener de Redimensionamento (Apenas para Cursor) ---
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        // Recalcula esconder/mostrar cursor customizado no resize
+        if (cursor) {
+           if (window.innerWidth <= 767) {
+                cursor.style.display = 'none';
+                document.body.style.cursor = 'default';
+            } else {
+                cursor.style.display = '';
+                document.body.style.cursor = 'none'; // Re-esconde cursor padrão no desktop
+            }
+        }
+    }, 250);
 });
 
-// --- 6. Animação do Formulário de Contato (com FETCH) ---
+
+// --- 6. Animação do Formulário de Contato ---
 const form = document.getElementById('contact-form');
 const submitButton = document.getElementById('submit-button');
 const submitText = document.getElementById('submit-text');
@@ -190,3 +220,5 @@ if (form && submitButton) {
       );
   });
 }
+
+console.log("main.js loaded and executed.");

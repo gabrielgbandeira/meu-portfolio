@@ -11,8 +11,8 @@
   body {
     /* Tema Escuro por padrão */
     @apply bg-black text-white font-sans antialiased;
-    /* Esconde o cursor padrão */
-    cursor: none;
+    /* Esconde o cursor padrão APENAS em desktop */
+    /* cursor: none; */ /* MOVIDO para media query abaixo */
   }
 
   /* Aplica fontes padrão para títulos */
@@ -32,8 +32,10 @@
   }
 }
 
-/* 1. Cursor Customizado */
+/* 1. Cursor Customizado (Visível apenas em Desktop) */
 .custom-cursor {
+  /* Default hidden, shown only via media query */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -109,14 +111,18 @@
   }
 }
 
-/* 3. Estilos do Swiper (Mobile - parte do @media abaixo) */
+/* --- ESTILOS ADICIONAIS v1.0 e v1.1 --- */
 
-
-/* --- ATUALIZAÇÃO: ESTILOS ADICIONAIS v1.0 --- */
-
-/* Estilos dos Cards de Projeto */
-.project-card {
-  overflow: hidden; /* Garante que a imagem não vaze */
+/* Estilos dos Cards de Projeto (Agora Slides do Swiper) */
+.project-card { /* Agora é .swiper-slide */
+  overflow: hidden;
+  display: flex; /* Para centralizar conteúdo se necessário */
+  flex-direction: column;
+  justify-content: center;
+  /* Garante altura correta no Swiper */
+  height: auto; /* Swiper controla a altura */
+  min-height: 80vh; /* Altura mínima para preencher a tela */
+  position: relative; /* Necessário para z-index funcionar corretamente */
 }
 
 .card-bg-image {
@@ -128,6 +134,7 @@
   object-fit: cover;
   z-index: 1;
   transition: transform 0.6s ease-out;
+  pointer-events: none; /* Permite cliques/arraste através */
 }
 
 .card-bg-overlay {
@@ -136,14 +143,16 @@
   background-color: rgba(0, 0, 0, 0.7); /* Overlay escuro */
   z-index: 2;
   transition: background-color 0.3s ease;
+  pointer-events: none; /* Permite cliques/arraste através */
 }
 
 .card-content {
   position: relative;
   z-index: 3;
+  padding: 2rem; /* Adiciona padding interno */
 }
 
-/* Novo estilo para o TÍTULO do projeto clicável */
+/* Estilo para o TÍTULO do projeto clicável */
 .project-title-link {
   display: inline-block;
   transition: color 0.3s ease;
@@ -153,31 +162,130 @@
   text-decoration: underline;
 }
 
-/* --- CORREÇÃO FINAL: Regras Responsivas --- */
+/* --- Estilos Swiper --- */
+/* Ajusta a seção para o Swiper */
+#projects-section.swiper-container {
+  width: 100%;
+  height: auto; /* Swiper controla altura */
+  min-height: 90vh; /* Garante que preencha a tela */
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden; /* Essencial para Swiper */
+  list-style: none;
+  padding: 0;
+  z-index: 1; /* Garante que fique acima de outros elementos se necessário */
+}
 
-/* Estilos para telas MAIORES que 768px (Desktop) */
+/* Paginação (Bolinhas) */
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px !important; /* Posiciona na base */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10; /* Garante que fique acima dos slides */
+}
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #555;
+  opacity: 0.7;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+.swiper-pagination-bullet-active {
+  background-color: theme('colors.electricBlue') !important;
+  opacity: 1;
+}
+
+/* Opcional: Estilos para botões de navegação (Setas) */
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute; /* Essencial para posicionamento */
+  color: theme('colors.electricBlue'); /* Cor das setas */
+  /* Esconde por padrão, mostra só no desktop */
+  display: none;
+  /* Posicionamento */
+  top: 50%;
+  width: calc(44px / 44 * 27); /* Tamanho padrão do Swiper */
+  height: 44px; /* Tamanho padrão do Swiper */
+  margin-top: -22px; /* Metade da altura */
+  z-index: 10; /* Acima dos slides */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease; /* Efeito suave no hover */
+}
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    opacity: 0.7;
+}
+.swiper-button-prev {
+    left: 10px; /* Posição da seta esquerda */
+}
+.swiper-button-next {
+    right: 10px; /* Posição da seta direita */
+}
+/* Ajusta o tamanho da seta dentro do botão (ícone padrão do Swiper) */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 24px; /* Tamanho da seta */
+    font-weight: bold;
+}
+
+
+/* --- Regras Responsivas --- */
+
+/* Estilos para telas MAIORES que 767px (Desktop) */
 @media (min-width: 768px) {
-  /* Aqui poderíamos adicionar estilos específicos para desktop se necessário */
-  /* Exemplo: .project-card:hover .card-bg-image { transform: scale(1.05); } */
+  /* Mostra cursor customizado e esconde o padrão */
+  .custom-cursor {
+    display: block;
+  }
+  body {
+    cursor: none;
+  }
+
+  /* Mostra setas de navegação do Swiper */
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: flex; /* Mostra as setas */
+  }
+
+  /* Ajusta padding do conteúdo do card no desktop */
+  .card-content {
+    padding: 4rem;
+  }
+
+  /* Opcional: Adiciona cursor grab ao container do Swiper no desktop */
+  #projects-section.swiper-container {
+      cursor: grab;
+  }
+  #projects-section.swiper-container:active {
+      cursor: grabbing;
+  }
 }
 
 /* Estilos para telas MENORES que 767px (Mobile) */
 @media (max-width: 767px) {
-  /* Ajustes do Swiper */
-  #projects-section {
-    height: auto;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-  .swiper-pagination-bullet-active {
-    background-color: theme('colors.electricBlue') !important;
-  }
+  /* Ajustes gerais de padding/margem */
+   #projects-section {
+    min-height: 70vh; /* Reduz altura mínima no mobile */
+   }
+   .card-content {
+    padding: 1.5rem; /* Reduz padding no mobile */
+   }
 
-  /* Esconde o cursor customizado */
+  /* Esconde cursor customizado */
   .custom-cursor {
-    display: none !important; /* Usando !important para garantir */
+    display: none !important;
   }
   body {
-     cursor: default !important; /* Usando !important para garantir */
+     cursor: default !important;
   }
 }
